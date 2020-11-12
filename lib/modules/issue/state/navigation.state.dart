@@ -26,7 +26,7 @@ class NavigationState extends BFastUIState{
         return NavTabs.HOME;
         break;
       case 1:
-        return NavTabs.HISTORY;
+        return NavTabs.ISSUES;
         break;
       case 2:
         return NavTabs.SETTINGS;

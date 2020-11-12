@@ -1,5 +1,6 @@
 import 'package:bfastui/adapters/page.dart';
 import 'package:bfastui/bfastui.dart';
+import 'package:pivotech/modules/issue/components/issues.components.dart';
 import 'package:pivotech/modules/issue/components/navigation.components.dart';
 import 'package:pivotech/modules/issue/state/navigation.state.dart';
 import 'package:pivotech/shared/components/shared.component.dart';
@@ -14,13 +15,14 @@ class TabsNavigationPage extends BFastUIPage {
         appBar: appBar(),
         body: getSelectedTabPage(),
         bottomNavigationBar: bottomNavigationBar(),
+        floatingActionButton: (navState.selectedTab == NavTabs.HOME) || (navState.selectedTab == NavTabs.ISSUES) ?  addIssueButton(context) : null,
       ),
     );
   }
 }
 
 enum NavTabs{
-  HOME, SETTINGS, HISTORY 
+  HOME, SETTINGS, ISSUES
 }
 
 
