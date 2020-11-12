@@ -9,21 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          child: ListView(
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         children: [
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: [  
-              suggestedInspections(),
-              watchedIssues(),
-              
-            ],
-          ),
-          //  Spacer(),
-           
+          suggestedInspections(),
+          watchedIssues(),
         ],
       ),
+      //  Spacer(),
     );
   }
 }

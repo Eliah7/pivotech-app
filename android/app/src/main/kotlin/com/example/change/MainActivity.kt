@@ -1,4 +1,4 @@
-package com.example.change
+package com.pivotech.pivotech
 
 import io.flutter.embedding.android.FlutterActivity
 
