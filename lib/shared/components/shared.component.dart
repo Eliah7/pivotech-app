@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 Widget appBar() {
   return AppBar(
-    title: Text("PIVOTECH"),
+    backgroundColor: Colors.white,
+    elevation: 0,
+    centerTitle: false,
+    title: Text("PIVOTECH", style: TextStyle(color: Config.primaryColor, fontSize: 35, fontWeight: FontWeight.bold),),
   );
 }
 
