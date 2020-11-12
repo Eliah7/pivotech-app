@@ -9,8 +9,8 @@ void main() {
   _connectWithBFastCloudProject();
   runApp(
     BFastUI.module(PivotechApp()).start(
-      initialPath: '/request',
-      title: "Change",
+      initialPath: '/issue',
+      title: "Pivotech",
       theme: ThemeData(
         fontFamily: Config.fontFamily,
         primarySwatch: Config.primaryColor,
