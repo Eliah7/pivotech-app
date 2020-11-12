@@ -1,8 +1,8 @@
 import 'package:bfastui/adapters/module.dart';
 import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
-import 'package:pivotech/account/account.module.dart';
-import 'package:pivotech/issue/issue.module.dart';
+import 'package:pivotech/modules/account/account.module.dart';
+import 'package:pivotech/modules/issue/issue.module.dart';
 
 class PivotechApp extends BFastUIMainModule {
   @override

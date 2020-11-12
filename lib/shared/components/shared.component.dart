@@ -1,5 +1,5 @@
 import 'package:bfastui/bfastui.dart';
-import 'package:pivotech/issue/state/navigation.state.dart';
+import 'package:pivotech/modules/issue/state/navigation.state.dart';
 import 'package:pivotech/shared/config.dart';
 import 'package:flutter/material.dart';
 

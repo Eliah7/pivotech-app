@@ -1,7 +1,7 @@
 
 import 'package:bfastui/adapters/state.dart';
 import 'package:bfastui/bfastui.dart';
-import 'package:pivotech/issue/pages/navigation.page.dart';
+import 'package:pivotech/modules/issue/pages/navigation.page.dart';
 
 class NavigationState extends BFastUIState{
   var selectedTab = NavTabs.HOME;
