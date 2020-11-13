@@ -1,3 +1,4 @@
+import 'package:bfastui/bfastui.dart';
 import 'package:pivotech/modules/inspections/components/suggested-inspections.component.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
 import 'package:pivotech/shared/config.dart';
@@ -10,7 +11,9 @@ Widget addIssueButton(BuildContext context) {
     child: RaisedButton(
       // elevation: 8,
       color: Config.primaryColor,
-      onPressed: () {},
+      onPressed: () {
+        BFastUI.navigateTo("/issue/createIssue");
+      },
       child: Center(
         child: Text(
           "ADD ISSUE",
