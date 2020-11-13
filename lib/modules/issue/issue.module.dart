@@ -3,6 +3,7 @@ import 'package:bfastui/adapters/router.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:pivotech/modules/issue/pages/create-issue.page.dart';
 import 'package:pivotech/modules/issue/pages/navigation.page.dart';
+import 'package:pivotech/modules/issue/state/issue.state.dart';
 import 'package:pivotech/modules/issue/state/navigation.state.dart';
 
 
@@ -25,7 +26,8 @@ class IssueModule extends BFastUIChildModule{
   @override
   void initStates(String moduleName) {
       BFastUI.states(moduleName: moduleName)
-        .addState((_) => NavigationState());
+        .addState((_) => NavigationState())
+        .addState((_) => IssueState());
   }
 
   @override

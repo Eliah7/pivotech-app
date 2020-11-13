@@ -1,6 +1,8 @@
 import 'package:bfastui/bfastui.dart';
 import 'package:pivotech/modules/inspections/components/suggested-inspections.component.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
+import 'package:pivotech/modules/issue/models/vehicle.model.dart';
+import 'package:pivotech/modules/issue/state/issue.state.dart';
 import 'package:pivotech/shared/config.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +61,8 @@ Widget watchedIssues() {
                       car: "T334 ADY",
                       status: IssueStatus.DONE,
                       dateIssued: "MON, 01/02/2020",
-                      description: "Child on the street threw a stone to the window of the car and destroyed the windsheild")),
+                      description:
+                          "Child on the street threw a stone to the window of the car and destroyed the windsheild")),
               issueItem(
                   issue: Issue(
                       issueName: "Oil Leak",
@@ -108,7 +111,10 @@ Widget issueItem({Issue issue}) {
                 issue.car != null ? issue.car : "",
                 style: TextStyle(fontSize: 15),
               ),
-              Text(issue.description != null ? issue.description : "", overflow: TextOverflow.ellipsis,)
+              Text(
+                issue.description != null ? issue.description : "",
+                overflow: TextOverflow.ellipsis,
+              )
             ],
           ),
         ),
@@ -128,4 +134,59 @@ Widget statusCircle(IssueStatus status) {
                 ? Colors.blue
                 : status == IssueStatus.PROCESSED ? Colors.green : Colors.red,
       ));
+}
+
+Widget createIssueForm(BuildContext context) {
+  return BFastUI.component().consumer<IssueState>(
+    (context, issueState) => Padding(
+      padding: EdgeInsets.fromLTRB(30, 20, 10, 10),
+      child: Form(
+        child: ListView(children: [
+          formItem(iconData: Icons.directions_car, title: "Choose Car"),
+          formItem(iconData: Icons.title_rounded, title: "Title"),
+          formItem(iconData: Icons.date_range, title: "Reported On"),
+          formItem(iconData: Icons.description, title: "Description"),
+          formItem(iconData: Icons.camera_alt, title: "Photos"),
+          submitIssueButton(context)
+        ]),
+      ),
+    ),
+  );
+}
+
+Widget formItem({IconData iconData, String title}) {
+  return Padding(
+      padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+      child: ListTile(
+          leading: Icon(
+            iconData,
+            size: 40,
+            color: Config.primaryColor,
+          ),
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          subtitle: TextFormField()));
+}
+
+Widget submitIssueButton(BuildContext context) {
+  return Container(
+    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+    margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+    width: MediaQuery.of(context).size.width / 1.1,
+    height: 40,
+    child: RaisedButton(
+      color: Config.primaryColor,
+      onPressed: () {
+        // BFastUI.navigateTo("/issue/createIssue");
+      },
+      child: Center(
+        child: Text(
+          "SUBMIT",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    ),
+  );
 }

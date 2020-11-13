@@ -10,7 +10,7 @@ Widget appBar({String title}) {
     centerTitle: false,
     leading: title == null ? null : ButtonBar(
       children: [
-        IconButton(icon: Icon(Icons.arrow_back, color: Config.primaryColor, size: 35,), onPressed: (){
+        IconButton(icon: Icon(Icons.arrow_back, color: Config.primaryColor, size: 35, ), padding: EdgeInsets.fromLTRB(0, 0, 0, 2), onPressed: (){
           BFastUI.navigator().maybePop();
         })
       ],
