@@ -1,6 +1,9 @@
 import 'package:bfastui/adapters/state.dart';
 import 'package:flutter/material.dart';
+import 'package:pivotech/modules/issue/issue.module.dart';
+import 'package:pivotech/modules/issue/models/issue.model.dart';
 import 'package:pivotech/modules/issue/models/vehicle.model.dart';
+import 'package:pivotech/modules/issue/services/http.service.dart';
 
 class IssueState extends BFastUIState {
   static var vehicles = [
@@ -8,17 +11,32 @@ class IssueState extends BFastUIState {
     VehicleModel(name: "Benz", plateNo: "T536 ADR"),
     VehicleModel(name: "IST", plateNo: "T557 DTP")
   ];
+  final textFieldControllers = {
+    "car_selection" : TextEditingController(),
+    "title" : TextEditingController(),
+    "reported_on" : TextEditingController(),
+    "description" : TextEditingController(),
+    "photos": TextEditingController()
+  };
+  final formKey = GlobalKey<FormState>();
+  final httpService = HttpService();
 
-  List<DropdownMenuItem<dynamic>> get vehicleNames => getVehicleNames();
+  Future createIssue() async{
+    if (formKey.currentState.validate()) {
+      var issue = Issue(
+        car: textFieldControllers["car_selection"].text,
+        dateIssued: textFieldControllers["reported_on"].text,
+        description: textFieldControllers["description"].text,
+        issueName: textFieldControllers["title"].text,
+        status: IssueStatus.ACTIVE
+      );
+      
+      await httpService.createIssue(issue);
+      
 
-  List<DropdownMenuItem<dynamic>> getVehicleNames() {
-    var _vehicleNames = [];
-    vehicles.forEach((element) {
-      _vehicleNames.add(DropdownMenuItem(child: Text(element.name)));
-    });
-    return _vehicleNames;
+      print(issue);
+    }
   }
-  var selectedCarDropDownMenu = DropdownMenuItem(child: Text(vehicles[0].name));
 
 
 }

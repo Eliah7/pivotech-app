@@ -21,5 +21,5 @@ void main() {
 }
 
 void _connectWithBFastCloudProject() {
-  // BFast.init(AppCredentials('moneychange', 'moneychange'));
+  BFast.init(AppCredentials('pivotech', 'pivotech'));
 }

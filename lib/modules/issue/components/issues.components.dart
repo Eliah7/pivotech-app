@@ -1,3 +1,4 @@
+import 'package:bfast/bfast.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:pivotech/modules/inspections/components/suggested-inspections.component.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
@@ -141,12 +142,13 @@ Widget createIssueForm(BuildContext context) {
     (context, issueState) => Padding(
       padding: EdgeInsets.fromLTRB(30, 20, 10, 10),
       child: Form(
+        key: issueState.formKey,
         child: ListView(children: [
-          formItem(iconData: Icons.directions_car, title: "Choose Car"),
-          formItem(iconData: Icons.title_rounded, title: "Title"),
-          formItem(iconData: Icons.date_range, title: "Reported On"),
-          formItem(iconData: Icons.description, title: "Description"),
-          formItem(iconData: Icons.camera_alt, title: "Photos"),
+          formItem(iconData: Icons.directions_car, title: "Choose Car", textController: issueState.textFieldControllers["car_selection"]),
+          formItem(iconData: Icons.title_rounded, title: "Title", textController: issueState.textFieldControllers["title"]),
+          dateFormItem(iconData: Icons.date_range, title: "Reported On", textController: issueState.textFieldControllers["reported_on"]),
+          formItem(iconData: Icons.description, title: "Description", textController: issueState.textFieldControllers["description"]),
+          formItem(iconData: Icons.camera_alt, title: "Photos", textController: issueState.textFieldControllers["photos"]),
           submitIssueButton(context)
         ]),
       ),
@@ -154,7 +156,28 @@ Widget createIssueForm(BuildContext context) {
   );
 }
 
-Widget formItem({IconData iconData, String title}) {
+Widget dateFormItem({IconData iconData, String title, TextEditingController textController}) {
+  return Padding(
+    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+    child: ListTile(
+        leading: Icon(
+          iconData,
+          size: 40,
+          color: Config.primaryColor,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        subtitle: InputDatePickerFormField(
+          firstDate: DateTime(DateTime.now().year),
+          lastDate: DateTime.now(),
+          
+        )),
+  );
+}
+
+Widget formItem({IconData iconData, String title, TextEditingController textController}) {
   return Padding(
       padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
       child: ListTile(
@@ -167,11 +190,13 @@ Widget formItem({IconData iconData, String title}) {
             title,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          subtitle: TextFormField()));
+          subtitle: TextFormField(
+            controller: textController,
+          )));
 }
 
 Widget submitIssueButton(BuildContext context) {
-  return Container(
+  return BFastUI.component().consumer<IssueState>((context, issueState) => Container(
     padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
     margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
     width: MediaQuery.of(context).size.width / 1.1,
@@ -179,7 +204,8 @@ Widget submitIssueButton(BuildContext context) {
     child: RaisedButton(
       color: Config.primaryColor,
       onPressed: () {
-        // BFastUI.navigateTo("/issue/createIssue");
+        issueState.createIssue();
+        BFastUI.navigator().maybePop();
       },
       child: Center(
         child: Text(
@@ -188,5 +214,5 @@ Widget submitIssueButton(BuildContext context) {
         ),
       ),
     ),
-  );
+  ));
 }
