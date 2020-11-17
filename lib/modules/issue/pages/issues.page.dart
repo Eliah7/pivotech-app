@@ -4,6 +4,6 @@ import 'package:pivotech/modules/issue/components/issues.components.dart';
 class IssuesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return watchedIssues();
+    return ListView(children: [watchedIssues()]);
   }
 }
