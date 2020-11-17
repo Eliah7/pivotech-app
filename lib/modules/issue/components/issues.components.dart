@@ -28,7 +28,7 @@ Widget addIssueButton(BuildContext context) {
 }
 
 Widget watchedIssues() {
-  return Container(
+  return BFastUI.component().consumer<IssueState>((context, issueState) => Container(
       padding: EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,41 +40,53 @@ Widget watchedIssues() {
           SizedBox(
             height: 10,
           ),
-          Column(
-            children: [
-              issueItem(
-                  issue: Issue(
-                      issueName: "Broken Window",
-                      car: "T456 DTP",
-                      status: IssueStatus.ACTIVE,
-                      dateIssued: "FRI, 12/08/2020",
-                      description: "Right Side window was hit by a stone")),
-              issueItem(
-                  issue: Issue(
-                      issueName: "Flat Tire",
-                      car: "T557 ADT",
-                      status: IssueStatus.CANCELLED,
-                      dateIssued: "SAT, 30/09/2020",
-                      description: "Left rear tire is bust")),
-              issueItem(
-                  issue: Issue(
-                      issueName: "Rock hit windsheild",
-                      car: "T334 ADY",
-                      status: IssueStatus.DONE,
-                      dateIssued: "MON, 01/02/2020",
-                      description:
-                          "Child on the street threw a stone to the window of the car and destroyed the windsheild")),
-              issueItem(
-                  issue: Issue(
-                      issueName: "Oil Leak",
-                      car: "T557 ADT",
-                      status: IssueStatus.PROCESSED,
-                      dateIssued: "TUE, 07/01/2020",
-                      description: "There is an oil leak")),
-            ],
-          ),
+          FutureBuilder(
+            future: issueState.fetchIssues(),
+            builder: (context, snapshot){
+              
+                if(snapshot.connectionState == ConnectionState.done){
+                  print(snapshot.data);
+                  return Column(
+            children: issueState.presentIssues(data: snapshot.data)
+            // [
+            //   issueItem(
+            //       issue: Issue(
+            //           issueName: "Broken Window",
+            //           car: "T456 DTP",
+            //           status: IssueStatus.ACTIVE,
+            //           dateIssued: "FRI, 12/08/2020",
+            //           description: "Right Side window was hit by a stone")),
+            //   issueItem(
+            //       issue: Issue(
+            //           issueName: "Flat Tire",
+            //           car: "T557 ADT",
+            //           status: IssueStatus.CANCELLED,
+            //           dateIssued: "SAT, 30/09/2020",
+            //           description: "Left rear tire is bust")),
+            //   issueItem(
+            //       issue: Issue(
+            //           issueName: "Rock hit windsheild",
+            //           car: "T334 ADY",
+            //           status: IssueStatus.DONE,
+            //           dateIssued: "MON, 01/02/2020",
+            //           description:
+            //               "Child on the street threw a stone to the window of the car and destroyed the windsheild")),
+            //   issueItem(
+            //       issue: Issue(
+            //           issueName: "Oil Leak",
+            //           car: "T557 ADT",
+            //           status: IssueStatus.PROCESSED,
+            //           dateIssued: "TUE, 07/01/2020",
+            //           description: "There is an oil leak")),
+            // ],
+          );
+                } else {
+                  return Center(child: Container(margin: EdgeInsets.fromLTRB(0, 50, 0, 0),width: 100, height: 100, child: Center(child: CircularProgressIndicator()),));
+                }
+          }),
+          
         ],
-      ));
+      )));
 }
 
 Widget issueItem({Issue issue}) {
@@ -149,7 +161,8 @@ Widget createIssueForm(BuildContext context) {
           dateFormItem(iconData: Icons.date_range, title: "Reported On", textController: issueState.textFieldControllers["reported_on"]),
           formItem(iconData: Icons.description, title: "Description", textController: issueState.textFieldControllers["description"]),
           formItem(iconData: Icons.camera_alt, title: "Photos", textController: issueState.textFieldControllers["photos"]),
-          submitIssueButton(context)
+          submitIssueButton(context),
+          loadingIndicator()
         ]),
       ),
     ),
@@ -204,8 +217,8 @@ Widget submitIssueButton(BuildContext context) {
     child: RaisedButton(
       color: Config.primaryColor,
       onPressed: () {
-        issueState.createIssue();
-        BFastUI.navigator().maybePop();
+        issueState.createIssue(context);
+        // BFastUI.navigator().maybePop();
       },
       child: Center(
         child: Text(
@@ -214,5 +227,15 @@ Widget submitIssueButton(BuildContext context) {
         ),
       ),
     ),
+  ));
+}
+
+Widget loadingIndicator() {
+  return BFastUI.component().consumer<IssueState>((context, issueState) => Container(
+    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+    margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+    width: MediaQuery.of(context).size.width / 1.1,
+    height: 5,
+    child: issueState.loading ?  LinearProgressIndicator(backgroundColor: Colors.green) : null
   ));
 }

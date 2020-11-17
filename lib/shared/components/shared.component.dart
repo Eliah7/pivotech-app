@@ -34,3 +34,9 @@ Widget bottomNavigationBar() {
           selectedItemColor: Config.primaryColor,
           onTap: navState.changeSelectedIndex));
 }
+
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar({String text, BuildContext context}){
+   return Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(text),
+    ));
+}

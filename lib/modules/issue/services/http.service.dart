@@ -11,16 +11,15 @@ class HttpService {
         "dateIssued" : issue.dateIssued,
         "description" : issue.description,
         "car" : issue.car,
-        "status" : issue.staus.toString()
+        "status" : issue.status.toString()
       }
     });
-    print(response["createissue"]);
     return response["createissue"];
   }
 
-  Future<List<dynamic>> getIssue({size: int, step: int}) async{
+  Future<List<dynamic>> getIssues({size: int, step: int}) async{
     var response = await BFast.functions().request(serverUrl).post({
-      "applicationId": "moneychange",
+      "applicationId": "pivotech",
       "queryissue": {
         // "size": size,
         // "step": step,
