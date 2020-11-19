@@ -1,6 +1,6 @@
 class Issue{
   String issueName;
-  String dateIssued;
+  Map<String, dynamic> dateIssued;
   String description;
   String car;
   IssueStatus status;

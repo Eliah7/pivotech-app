@@ -1,5 +1,6 @@
 import 'package:bfast/bfast.dart';
 import 'package:bfastui/bfastui.dart';
+import 'package:intl/intl.dart';
 import 'package:pivotech/modules/inspections/components/suggested-inspections.component.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
 import 'package:pivotech/modules/issue/models/vehicle.model.dart';
@@ -74,7 +75,7 @@ Widget issueItem({Issue issue}) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                issue.dateIssued != null ? issue.dateIssued : "",
+                issue.dateIssued != null ? issue.dateIssued["day"] + ", "+ issue.dateIssued["date"] : "",
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(
@@ -173,8 +174,8 @@ Widget dateFormItem(
             ),
             subtitle: FlatButton(
               child: Text("Choose Date"),
-              onPressed: () {
-                final pickedDate = showDatePicker(
+              onPressed: () async{
+                final pickedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(DateTime.now().year),
@@ -188,7 +189,10 @@ Widget dateFormItem(
                 );
 
                 if(pickedDate != null){
-                  BFastUI.getState<IssueState>().pickedDate = pickedDate.toString();
+                  BFastUI.getState<IssueState>().pickedDate = {
+                    "day": DateFormat('EEEE').format(pickedDate),
+                    "date":pickedDate.toString().substring(0,10)
+                  };
                   print(BFastUI.getState<IssueState>().pickedDate);
                 }
               },

@@ -24,7 +24,7 @@ class IssueState extends BFastUIState {
   final httpService = HttpService();
   var loading = false;
   String imageLocation;
-  String pickedDate;
+  Map<String, dynamic> pickedDate;
 
   Future<List<dynamic>> fetchIssues() async {
     try {
