@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "986425898618",
+    "firebase_url": "https://pivotech-8a133.firebaseio.com",
+    "project_id": "pivotech-8a133",
+    "storage_bucket": "pivotech-8a133.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986425898618:android:d3f0ee050cc5c4b0482dc3",
+        "android_client_info": {
+          "package_name": "com.pivotech.pivotech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986425898618-a95ej3qpmeefho6pt16d81l0tu4jcl30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYEKZvzVdhBTvf4MnKmHq9Jejl6nNEydQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986425898618-a95ej3qpmeefho6pt16d81l0tu4jcl30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

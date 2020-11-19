@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:bfastui/adapters/state.dart';
 import 'package:bfastui/bfastui.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pivotech/modules/issue/components/issues.components.dart';
 import 'package:pivotech/modules/issue/issue.module.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
@@ -19,6 +23,8 @@ class IssueState extends BFastUIState {
   final formKey = GlobalKey<FormState>();
   final httpService = HttpService();
   var loading = false;
+  String imageLocation;
+  String pickedDate;
 
   Future<List<dynamic>> fetchIssues() async {
     try {
@@ -39,12 +45,14 @@ class IssueState extends BFastUIState {
                     element["issueName"] != null ? element["issueName"] : "",
                 car: element["car"] != null ? element["car"] : "",
                 status: IssueStatus.ACTIVE,
+                imageUrl:  element["imageUrl"] != null ? element["imageUrl"] : "",
                 dateIssued:
                     element["dateIssued"] != null ? element["dateIssued"] : "",
                 description: element["description"] != null
                     ? element["description"]
                     : "")));
       });
+      this.imageLocation = '';
     } else {
       print("data is null");
     }
@@ -59,6 +67,7 @@ class IssueState extends BFastUIState {
       await httpService.createIssue(generateIssueFromForm()).then((value) {
         showSnackBar(context: context, text: 'Issue is created');
         setLoadingStatus(false);
+        clearInputs();
         BFastUI.navigator().maybePop();
       }).catchError((err) {
         setLoadingStatus(false);
@@ -70,10 +79,19 @@ class IssueState extends BFastUIState {
     }
   }
 
+  void clearInputs() {
+    this.imageLocation = '';
+    this.textFieldControllers.forEach((key, value) {
+      value.clear();
+    });
+    notifyListeners();
+  }
+
   Issue generateIssueFromForm() {
     return Issue(
         car: textFieldControllers["car_selection"].text,
-        dateIssued: textFieldControllers["reported_on"].text,
+        imageUrl: imageLocation != null ? imageLocation : null,
+        dateIssued: this.pickedDate != null ? pickedDate: "",
         description: textFieldControllers["description"].text,
         issueName: textFieldControllers["title"].text,
         status: IssueStatus.ACTIVE);
@@ -82,5 +100,23 @@ class IssueState extends BFastUIState {
   void setLoadingStatus(bool status) {
     this.loading = status;
     notifyListeners();
+  }
+
+  choosePhoto() async {
+    await ImagePicker.pickImage(source: ImageSource.camera).then((image) {
+      sendImageToFirebase(image);
+    });
+  }
+
+  sendImageToFirebase(dynamic image) async {
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child('Images/${(image.path)}}');
+    StorageUploadTask uploadTask = storageReference.putFile(image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    await storageReference.getDownloadURL().then((fileURL) {
+      imageLocation = fileURL;
+      notifyListeners();
+    });
   }
 }

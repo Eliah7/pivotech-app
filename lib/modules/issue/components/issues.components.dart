@@ -145,10 +145,10 @@ Widget createIssueForm(BuildContext context) {
               iconData: Icons.description,
               title: "Description",
               textController: issueState.textFieldControllers["description"]),
-          formItem(
-              iconData: Icons.camera_alt,
-              title: "Photos",
-              textController: issueState.textFieldControllers["photos"]),
+          choosePhotoItem(
+            iconData: Icons.camera_alt,
+            title: "Photos",
+          ),
           submitIssueButton(context),
           loadingIndicator()
         ]),
@@ -174,7 +174,7 @@ Widget dateFormItem(
             subtitle: FlatButton(
               child: Text("Choose Date"),
               onPressed: () {
-                showDatePicker(
+                final pickedDate = showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(DateTime.now().year),
@@ -186,6 +186,11 @@ Widget dateFormItem(
                     );
                   },
                 );
+
+                if(pickedDate != null){
+                  BFastUI.getState<IssueState>().pickedDate = pickedDate.toString();
+                  print(BFastUI.getState<IssueState>().pickedDate);
+                }
               },
             )
             // InputDatePickerFormField(
@@ -195,6 +200,33 @@ Widget dateFormItem(
             // )
             ),
       ));
+}
+
+Widget choosePhotoItem({IconData iconData, String title}) {
+  return BFastUI.component()
+      .consumer<IssueState>((context, issueState) => Padding(
+          padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+          child: Column(children: [
+            ListTile(
+                leading: Icon(
+                  iconData,
+                  size: 40,
+                  color: Config.primaryColor,
+                ),
+                title: Text(
+                  title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                subtitle: FlatButton(
+                  child: Text("Take Photo"),
+                  onPressed: () {
+                    issueState.choosePhoto();
+                  },
+                )),
+            Container(
+              child: issueState.imageLocation != null ? Text("Image Uploaded") : Text("No Image Selected"),
+            )
+          ])));
 }
 
 Widget formItem(
