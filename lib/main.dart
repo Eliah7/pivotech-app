@@ -9,7 +9,7 @@ void main() {
   _connectWithBFastCloudProject();
   runApp(
     BFastUI.module(PivotechApp()).start(
-      initialPath: '/issue',
+      initialPath: '/account',
       title: "Pivotech",
       theme: ThemeData(
         fontFamily: Config.fontFamily,
@@ -19,8 +19,6 @@ void main() {
     ),
   );
 }
-
-
 
 void _connectWithBFastCloudProject() {
   BFast.init(AppCredentials('pivotech', 'pivotech'));
