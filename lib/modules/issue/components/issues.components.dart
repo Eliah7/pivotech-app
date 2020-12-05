@@ -1,9 +1,6 @@
-import 'package:bfast/bfast.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:intl/intl.dart';
-import 'package:pivotech/modules/inspections/components/suggested-inspections.component.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
-import 'package:pivotech/modules/issue/models/vehicle.model.dart';
 import 'package:pivotech/modules/issue/state/issue.state.dart';
 import 'package:pivotech/shared/config.dart';
 import 'package:flutter/material.dart';

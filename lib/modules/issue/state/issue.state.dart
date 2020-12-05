@@ -1,18 +1,18 @@
-import 'dart:io';
-
 import 'package:bfastui/adapters/state.dart';
 import 'package:bfastui/bfastui.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pivotech/main.dart';
 import 'package:pivotech/modules/issue/components/issues.components.dart';
-import 'package:pivotech/modules/issue/issue.module.dart';
 import 'package:pivotech/modules/issue/models/issue.model.dart';
-import 'package:pivotech/modules/issue/models/vehicle.model.dart';
 import 'package:pivotech/modules/issue/services/http.service.dart';
 import 'package:pivotech/shared/components/shared.component.dart';
 
 class IssueState extends BFastUIState {
+  HttpService httpService = getIt();
+  IssueState();
+
   final textFieldControllers = {
     "car_selection": TextEditingController(),
     "title": TextEditingController(),
@@ -21,7 +21,7 @@ class IssueState extends BFastUIState {
     "photos": TextEditingController()
   };
   final formKey = GlobalKey<FormState>();
-  final httpService = HttpService();
+  
   var loading = false;
   String imageLocation;
   Map<String, dynamic> pickedDate;

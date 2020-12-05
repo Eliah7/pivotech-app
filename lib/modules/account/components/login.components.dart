@@ -7,11 +7,11 @@ Widget loginButton(BuildContext context) {
   return Container(
     margin:
         EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height / 3, 0, 0),
-    width: MediaQuery.of(context).size.width / 1.4,
+    width: MediaQuery.of(context).size.width / 1.3,
     height: 40,
     child: RaisedButton(
       // elevation: 8,
-      color: Colors.grey,
+      color: Colors.green,
       onPressed: () {
         BFastUI.navigateTo("/account/loginForm");
       },

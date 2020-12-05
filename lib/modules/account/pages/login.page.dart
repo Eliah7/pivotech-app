@@ -24,7 +24,6 @@ class LoginPage extends BFastUIPage {
         ),
       ),
       loginButton(context)
-
     ])));
   }
 }

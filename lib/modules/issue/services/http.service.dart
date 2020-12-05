@@ -1,5 +1,7 @@
 import 'package:bfast/bfast.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class HttpService {
   String serverUrl = "https://pivotech-daas.bfast.fahamutech.com/v2";
 

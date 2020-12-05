@@ -1,6 +1,4 @@
-
 import 'package:bfastui/adapters/state.dart';
-import 'package:bfastui/bfastui.dart';
 import 'package:pivotech/modules/issue/pages/navigation.page.dart';
 
 class NavigationState extends BFastUIState{
